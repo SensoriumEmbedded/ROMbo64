@@ -1,0 +1,61 @@
+Name     ROMBO ;
+PartNo   ;
+Date     12/23/2022 ;
+Revision 01 ;
+Designer Travis Smith ;
+Company  Sensorium ;
+Assembly None ;
+Location None ;
+Device   g16v8a;
+
+/* *************** INPUT PINS *********************/
+PIN  1   =  !Kern                       ; /*                                 */ 
+PIN  2   =  !BASIC                      ; /*                                 */ 
+PIN  3   =  !Char                       ; /*                                 */ 
+PIN  4   =  KSel0                       ; /*                                 */ 
+PIN  5   =  KSel1                       ; /*                                 */ 
+PIN  6   =  BSel0                       ; /*                                 */ 
+PIN  7   =  CSel0                       ; /*                                 */ 
+PIN  8   =  CSel1                       ; /*                                 */ 
+PIN  9   =  A12                         ; /*                                 */ 
+
+/* *************** OUTPUT PINS *********************/
+PIN  19   = EA12                        ; /*                                 */ 
+PIN  18   = EA13                        ; /*                                 */ 
+PIN  17   = EA14                        ; /*                                 */ 
+PIN  16   = EA15                        ; /*                                 */ 
+PIN  15   = !OE                         ; /*                                 */ 
+
+OE = Kern # BASIC # Char;
+EA12 = !Char & A12 # 
+        Char & CSel0;
+EA13 = Char & CSel1 # 
+       BASIC & BSel0 # 
+       Kern & KSel0;
+EA14 = Kern & KSel1 #
+       Char;
+EA15 = !Kern;
+
+/*        
+   AND & *
+   OR  # +
+   
+   EEEE                
+   AAAA                
+   1111                
+   5432 Start Len Contents            
+                       
+   1111 $F000 4k  Char 11   
+   1110 $E000 4k  Char 10   
+   1101 $D000 4k  Char 01   
+   1100 $C000 4k  Char 00   
+                      
+   101x $B000 8k  BASIC 1      
+   100x $8000 8k  BASIC 0          
+                    
+   011x $6000 8k  Kernal 11      
+   010x $4000 8k  Kernal 10      
+   001x $2000 8k  Kernal 01      
+   000x $0000 8k  Kernal 00      
+*/                     
+
